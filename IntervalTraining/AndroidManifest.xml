@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.intervaltraining.Main"
+            android:name="com.example.intervaltraining.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,11 +23,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.intervaltraining.Setting"
+            android:name="com.example.intervaltraining.SettingsActivity"
             android:label="@string/title_activity_setting" >
         </activity>
         <activity
-            android:name="com.example.intervaltraining.ViewLog"
+            android:name="com.example.intervaltraining.ViewLogActivity"
             android:label="@string/title_activity_view_log" >
         </activity>
     </application>
