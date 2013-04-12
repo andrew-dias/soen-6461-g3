@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class Setting extends Activity implements android.view.View.OnClickListener {
-	EditText Time;
+	EditText Time1;
 	EditText Distance;
 	EditText DecrementRate;
 	Button save;
@@ -21,7 +21,7 @@ public class Setting extends Activity implements android.view.View.OnClickListen
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
-		Time = (EditText) this.findViewById(R.id.TimeText);
+		Time1 = (EditText) this.findViewById(R.id.TimeText);
 	    Distance = (EditText) this.findViewById(R.id.DistanceText);
 		DecrementRate = (EditText) this.findViewById(R.id.DecrementText);
 		save=(Button) this.findViewById(R.id.OK);
