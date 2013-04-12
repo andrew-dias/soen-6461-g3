@@ -6,42 +6,40 @@
     android:background="#ffa3c6de"
     tools:context=".MainActivity" >
 
-    <ToggleButton
-        android:id="@+id/toggleButton"
+    <TextView
+        android:id="@+id/timerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/chrono"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="31dp"
+        android:text="00:00"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="100sp" />
+
+    <TextView
+        android:id="@+id/lapTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Lap 0"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="50sp" />
+
+    <ToggleButton
+        android:id="@+id/startToggleButton"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="46dp"
         android:height="75sp"
+        android:onClick="onStartToggleButtonClicked"
         android:text="ToggleButton"
         android:textOff="Start"
-        android:textOn="Pause"
+        android:textOn="Stop"
+        android:textSize="50sp"
         android:width="150sp" />
-
-    <Chronometer
-        android:id="@+id/chrono"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="19dp"
-        android:text="Chronometer"
-        android:textSize="@android:dimen/thumbnail_height" />
-
-    <Button
-        android:id="@+id/setting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:background="@drawable/optionsbutton" />
-
-    <Button
-        android:id="@+id/viewlog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/loadbutton" />
 
 </RelativeLayout>
