@@ -1,5 +1,6 @@
 package com.example.intervaltraining;
 
+import android.media.audiofx.BassBoost.Settings;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -40,7 +41,7 @@ public class ViewLogActivity extends Activity implements android.view.View.OnCli
 	            startActivity(intent);
 	            return true;
 	    	case R.id.settings_menu_item:
-	        	intent = new Intent(this, SettingsActivity.class);
+	        	intent = new Intent(this, Settings.class);
 	        	startActivity(intent);
 	            return true;
 /*           	case R.id.view_log_menu_item:

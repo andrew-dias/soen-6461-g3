@@ -103,7 +103,7 @@ public class MainActivity extends Activity {
 	            startActivity(intent);
 	            return true;
 */	    	case R.id.settings_menu_item:
-	        	intent = new Intent(this, SettingsActivity.class);
+	        	intent = new Intent(this, Setting.class);
 	        	startActivity(intent);
 	            return true;
            	case R.id.view_log_menu_item:
