@@ -2,7 +2,6 @@ package com.example.intervaltraining;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.content.Intent;
@@ -10,27 +9,28 @@ import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Chronometer;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 public class MainActivity extends Activity {
-	/*
-	 * EditText txt; Button setting; Button viewlog; Chronometer chrono;
-	 * ToggleButton toggle; long time = 0;
-	 */
 
+	// settings
 	private int intervalDistance;
 	private int intervalTime;
 	private int timeDecrement;
+	private String intervalBeep;
+	private String songID;
+	
+	// statistics
 	private int lapCounter = 0;
 
-	private CountDownTimer timer;
+	// screen view objects
 	private TextView timerTextView;
 	private TextView lapTextView;
 
+	private CountDownTimer timer;
+	
+	// format milliseconds into display string
 	private String getTimeString(long time) {
 		String format = String.format("%%0%dd", 2);
 		time = time / 1000;
@@ -38,10 +38,22 @@ public class MainActivity extends Activity {
 		String minutes = String.format(format, (time % 3600) / 60);
 		return (minutes + ":" + seconds);
 	}
-	
-	private void setValues(){
-		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-		intervalTime = Integer.parseInt(sharedPref.getString("pref_key_interval_time", "")) * 1000;
+
+	// get app settings
+	private void setValues() {
+		// load default settings from XML if user has not set them yet
+		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+		
+		// get stored settings
+		SharedPreferences sharedPref = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		intervalTime = Integer.parseInt(sharedPref.getString(
+				"pref_key_interval_time", "0")) * 1000;
+		intervalDistance = Integer.parseInt(sharedPref.getString(
+				"pref_key_interval_distance", "0"));
+		timeDecrement = Integer.parseInt(sharedPref.getString(
+				"key_pref_time_decrement", "0"));
+		intervalBeep = sharedPref.getString("key_pref_interval_beep", "");
 	}
 
 	@Override
@@ -50,19 +62,11 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		setValues();
-		
+
 		timerTextView = (TextView) this.findViewById(R.id.timerTextView);
 		lapTextView = (TextView) this.findViewById(R.id.lapTextView);
 
 		timerTextView.setText(getTimeString(intervalTime));
-		/*
-		 * setting = (Button) this.findViewById(R.id.setting); viewlog =
-		 * (Button) this.findViewById(R.id.viewlog); chrono = (Chronometer)
-		 * this.findViewById(R.id.chrono); toggle = (ToggleButton)
-		 * this.findViewById(R.id.startToggleButton);
-		 * setting.setOnClickListener(this); viewlog.setOnClickListener(this);
-		 * toggle.setOnClickListener(this);
-		 */
 		timer = new CountDownTimer(intervalTime, 100) {
 
 			public void onTick(long millisUntilFinished) {
@@ -85,13 +89,7 @@ public class MainActivity extends Activity {
 		} else {
 			timer.cancel();
 		}
-
-		/*
-		 * if (view.getId() == R.id.setting) { Intent myIntent = new
-		 * Intent(this, SettingsActivity.class); startActivity(myIntent); } if
-		 * (view.getId() == R.id.viewlog) { Intent myIntent = new Intent(this,
-		 * ViewLogActivity.class); startActivity(myIntent); }
-		 */}
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

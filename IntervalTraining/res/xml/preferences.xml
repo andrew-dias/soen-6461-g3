@@ -3,15 +3,18 @@
     android:title="Settings" >
 
     <EditTextPreference
-        android:defaultValue="15"
+        android:defaultValue="10"
+		android:numeric="integer"
         android:key="pref_key_interval_time"
         android:title="Initial interval time (in seconds)"/>
     <EditTextPreference
-        android:defaultValue="10"
+        android:defaultValue="15"
+		android:numeric="integer"
         android:key="key_pref_interval_distance"
         android:title="Interval distance (in meters)" />
     <EditTextPreference
         android:defaultValue="10"
+		android:numeric="integer"
         android:key="key_pref_time_decrement"
         android:title="Time decrement (in %)" />
 
