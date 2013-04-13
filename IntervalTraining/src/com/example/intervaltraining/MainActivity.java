@@ -3,8 +3,10 @@ package com.example.intervaltraining;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,9 +22,9 @@ public class MainActivity extends Activity {
 	 * ToggleButton toggle; long time = 0;
 	 */
 
-	private int distance = 15;
-	private int lapTime = 5000;
-	private int decrement = 10;
+	private int intervalDistance;
+	private int intervalTime;
+	private int timeDecrement;
 	private int lapCounter = 0;
 
 	private CountDownTimer timer;
@@ -36,16 +38,23 @@ public class MainActivity extends Activity {
 		String minutes = String.format(format, (time % 3600) / 60);
 		return (minutes + ":" + seconds);
 	}
+	
+	private void setValues(){
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+		intervalTime = Integer.parseInt(sharedPref.getString("pref_key_interval_time", "")) * 1000;
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		setValues();
+		
 		timerTextView = (TextView) this.findViewById(R.id.timerTextView);
 		lapTextView = (TextView) this.findViewById(R.id.lapTextView);
 
-		timerTextView.setText(getTimeString(lapTime));
+		timerTextView.setText(getTimeString(intervalTime));
 		/*
 		 * setting = (Button) this.findViewById(R.id.setting); viewlog =
 		 * (Button) this.findViewById(R.id.viewlog); chrono = (Chronometer)
@@ -54,7 +63,7 @@ public class MainActivity extends Activity {
 		 * setting.setOnClickListener(this); viewlog.setOnClickListener(this);
 		 * toggle.setOnClickListener(this);
 		 */
-		timer = new CountDownTimer(lapTime, 100) {
+		timer = new CountDownTimer(intervalTime, 100) {
 
 			public void onTick(long millisUntilFinished) {
 				timerTextView.setText(getTimeString(millisUntilFinished));
