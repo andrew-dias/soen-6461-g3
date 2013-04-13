@@ -32,11 +32,9 @@ public class MainActivity extends Activity {
 	
 	// format milliseconds into display string
 	private String getTimeString(long time) {
-		String format = String.format("%%0%dd", 2);
-		time = time / 1000;
-		String seconds = String.format(format, time % 60);
-		String minutes = String.format(format, (time % 3600) / 60);
-		return (minutes + ":" + seconds);
+		String str = String.format("%1$TS:%1$TL", time);
+		str = str.substring(0, str.length()-2);
+		return str;		
 	}
 
 	// get app settings
@@ -67,6 +65,7 @@ public class MainActivity extends Activity {
 		lapTextView = (TextView) this.findViewById(R.id.lapTextView);
 
 		timerTextView.setText(getTimeString(intervalTime));
+		
 		timer = new CountDownTimer(intervalTime, 100) {
 
 			public void onTick(long millisUntilFinished) {
@@ -79,7 +78,7 @@ public class MainActivity extends Activity {
 			}
 		};
 	}
-
+	
 	public void onStartToggleButtonClicked(View view) {
 		// Is the toggle on?
 		boolean on = ((ToggleButton) view).isChecked();
