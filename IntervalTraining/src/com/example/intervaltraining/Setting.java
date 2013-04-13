@@ -1,6 +1,11 @@
 package com.example.intervaltraining;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+
 import android.os.Bundle;
+import android.os.Environment;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
@@ -13,7 +18,6 @@ public class Setting extends Activity implements android.view.View.OnClickListen
 	EditText Distance;
 	EditText DecrementRate;
 	Button save;
-	Button clear;
 	Button SelectBeep;
 	Button SelectMusic;
 	
@@ -25,10 +29,10 @@ public class Setting extends Activity implements android.view.View.OnClickListen
 	    Distance = (EditText) this.findViewById(R.id.DistanceText);
 		DecrementRate = (EditText) this.findViewById(R.id.DecrementText);
 		save=(Button) this.findViewById(R.id.OK);
-		clear=(Button) this.findViewById(R.id.clear);
+	}
+		
 		//SelectBeep=(Button)
 		//SelectMusic=(Button)
-	}
 
 	/*@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -40,7 +44,14 @@ public class Setting extends Activity implements android.view.View.OnClickListen
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
-		
+		System.out.println("Hellooo");
+		//System.out.println(setting.SaveSetting(Distance.getText().toString()));
 	}
-
+	public void onSave(View view) {
+	     // Kabloey
+	
+		SettingFileFacade setting = new SettingFileFacade();
+		boolean result = setting.SaveSetting(Distance.getText().toString());
+		Time1.setText(String.valueOf(result));
+	 }
 }
