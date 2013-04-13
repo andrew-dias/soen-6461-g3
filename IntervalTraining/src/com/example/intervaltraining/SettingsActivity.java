@@ -1,27 +1,22 @@
 package com.example.intervaltraining;
 
-import android.media.audiofx.BassBoost.Settings;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Spinner;
 
-public class ViewLogActivity extends Activity implements
-		android.view.View.OnClickListener {
-	Button ok;
-	Spinner sp;
-
+public class SettingsActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_view_log);
-		ok = (Button) this.findViewById(R.id.OK);
-		sp = (Spinner) findViewById(R.id.spinner);
+
+		// Display the fragment as the main content.
+		getFragmentManager().beginTransaction()
+				.replace(android.R.id.content, new SettingsFragment()).commit();
+
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+
 	}
 
 	@Override
@@ -58,11 +53,4 @@ public class ViewLogActivity extends Activity implements
 			return super.onOptionsItemSelected(item);
 		}
 	}
-
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

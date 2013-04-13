@@ -2,9 +2,25 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="Settings" >
 
-    <CheckBoxPreference
-        android:key="MyBoolean"
-        android:title="Boolean Value" >
-    </CheckBoxPreference>
+    <EditTextPreference
+        android:defaultValue="15"
+        android:key="pref_key_interval_time"
+        android:title="Initial interval time (in seconds)" />
+    <EditTextPreference
+        android:defaultValue="10"
+        android:key="key_pref_interval_distance"
+        android:title="Interval distance (in meters)" />
+    <EditTextPreference
+        android:defaultValue="10"
+        android:key="key_pref_time_decrement"
+        android:title="Time decrement (in %)" />
+
+    <RingtonePreference
+        android:defaultValue="DEFAULT_ALARM_ALERT_URI"
+        android:key="key_pref_interval_beep"
+        android:ringtoneType="alarm"
+        android:showDefault="true"
+        android:showSilent="true"
+        android:title="Interval timer alert" />
 
 </PreferenceScreen>

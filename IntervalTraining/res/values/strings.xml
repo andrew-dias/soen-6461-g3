@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Interval Training</string>
-    <string name="title_activity_main">Interval Trainer</string>
+    <string name="title_activity_main">Interval Training</string>
     <string name="title_activity_setting">Settings</string>
     <string name="title_activity_view_log">Statistics</string>
 
