@@ -1,5 +1,8 @@
 package com.example.intervaltraining;
 
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
@@ -14,7 +17,7 @@ import android.widget.ToggleButton;
 
 public class MainActivity extends Activity {
 
-	// settings
+	// application settings
 	private int intervalDistance;
 	private int intervalTime;
 	private int timeDecrement;
@@ -24,11 +27,11 @@ public class MainActivity extends Activity {
 	// statistics
 	private int lapCounter = 0;
 
-	// screen view objects
+	// screen objects
 	private TextView timerTextView;
 	private TextView lapTextView;
 
-	private CountDownTimer timer;
+	private CountDownTimer intervalTimer;
 	
 	// format milliseconds into display string
 	private String getTimeString(long time) {
@@ -38,7 +41,7 @@ public class MainActivity extends Activity {
 	}
 
 	// get app settings
-	private void setValues() {
+	private void setAppSettings() {
 		// load default settings from XML if user has not set them yet
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		
@@ -54,25 +57,40 @@ public class MainActivity extends Activity {
 		intervalBeep = sharedPref.getString("key_pref_interval_beep", "");
 	}
 
+	// TODO: This doesn't work
+	private void playBeep(){
+		Uri beepUri = Uri.parse(intervalBeep);
+		Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), beepUri);
+		r.play();			
+    }
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		setValues();
+		// load the application settings
+		setAppSettings();
 
+		// set screen objects
 		timerTextView = (TextView) this.findViewById(R.id.timerTextView);
 		lapTextView = (TextView) this.findViewById(R.id.lapTextView);
 
+		// display starting interval time
 		timerTextView.setText(getTimeString(intervalTime));
 		
-		timer = new CountDownTimer(intervalTime, 100) {
+		// the interval timer
+		intervalTimer = new CountDownTimer(intervalTime, 100) {
 
+			// update the timer display
 			public void onTick(long millisUntilFinished) {
 				timerTextView.setText(getTimeString(millisUntilFinished));
 			}
 
+			// TODO: Only increase the lap count every 2nd iteration
+			// TODO: Decrement the time each lap 
 			public void onFinish() {
+				playBeep();
 				lapTextView.setText("Lap: " + ++lapCounter);
 				this.start();
 			}
@@ -84,9 +102,11 @@ public class MainActivity extends Activity {
 		boolean on = ((ToggleButton) view).isChecked();
 
 		if (on) {
-			timer.start();
+			// TODO: Play music
+			intervalTimer.start();
 		} else {
-			timer.cancel();
+			// TODO: Generate and save statistics
+			intervalTimer.cancel();
 		}
 	}
 
