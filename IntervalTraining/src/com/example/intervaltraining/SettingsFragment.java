@@ -13,4 +13,5 @@ public class SettingsFragment extends PreferenceFragment {
         addPreferencesFromResource(R.xml.preferences);
     }
 
+    // TODO: Show current values in settings summaries  
 }

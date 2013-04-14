@@ -87,8 +87,7 @@ public class MainActivity extends Activity {
 				timerTextView.setText(getTimeString(millisUntilFinished));
 			}
 
-			// TODO: Only increase the lap count every 2nd iteration
-			// TODO: Decrement the time each lap 
+			// TODO: Decrement the time every other lap 
 			public void onFinish() {
 				playBeep();
 				lapTextView.setText("Lap: " + ++lapCounter);
@@ -105,8 +104,10 @@ public class MainActivity extends Activity {
 			// TODO: Play music
 			intervalTimer.start();
 		} else {
-			// TODO: Generate and save statistics
 			intervalTimer.cancel();
+			IntervalStatistics stats = new IntervalStatistics(intervalTime, intervalDistance, timeDecrement, lapCounter);
+			// TODO: save statistics
+			// TODO: show statistics screen
 		}
 	}
 
