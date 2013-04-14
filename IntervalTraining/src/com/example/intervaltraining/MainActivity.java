@@ -1,5 +1,7 @@
 package com.example.intervaltraining;
 
+import java.util.Date;
+
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -25,6 +27,7 @@ public class MainActivity extends Activity {
 	private String songID;
 	
 	// statistics
+	private Date currentDate;
 	private int lapCounter = 0;
 
 	// screen objects
@@ -102,12 +105,20 @@ public class MainActivity extends Activity {
 
 		if (on) {
 			// TODO: Play music
+			currentDate = new Date();
 			intervalTimer.start();
 		} else {
 			intervalTimer.cancel();
-			IntervalStatistics stats = new IntervalStatistics(intervalTime, intervalDistance, timeDecrement, lapCounter);
-			// TODO: save statistics
-			// TODO: show statistics screen
+			if (lapCounter > 0) {
+				// generate statistics
+				IntervalStatistics stats = new IntervalStatistics(currentDate, intervalTime, intervalDistance, timeDecrement, lapCounter);
+				// send user to statistics screen
+				Intent intent = new Intent(this, StatisticsActivity.class);
+				intent.putExtra("com.example.intervaltraining.IntervalStatistics", stats);
+				startActivity(intent);
+				
+				// TODO: change button text to 'Reset'.
+			}
 		}
 	}
 

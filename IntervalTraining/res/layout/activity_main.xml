@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="31dp"
-        android:text="00:00"
+        android:text="00:0"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="100sp" />
 

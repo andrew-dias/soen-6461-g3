@@ -34,6 +34,10 @@
             android:name="com.example.intervaltraining.ViewLogActivity"
             android:label="@string/title_activity_view_log" >
         </activity>
-    </application>
+        <activity
+            android:name="com.example.intervaltraining.StatisticsActivity"
+            android:label="@string/title_activity_statistics" >
+        </activity>
+        </application>
 
 </manifest>
