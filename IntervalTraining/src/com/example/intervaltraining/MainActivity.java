@@ -24,7 +24,6 @@ public class MainActivity extends Activity {
 	private int intervalTime;
 	private int timeDecrement;
 	private String intervalBeep;
-	private String songID;
 	
 	// statistics
 	private Date currentDate;

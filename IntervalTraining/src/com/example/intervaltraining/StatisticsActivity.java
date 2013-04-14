@@ -1,7 +1,6 @@
 package com.example.intervaltraining;
 
-import java.text.SimpleDateFormat;
-
+import java.text.DateFormat;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -52,7 +51,7 @@ public class StatisticsActivity extends Activity {
 	}
 
 	private void setDisplayValues(IntervalStatistics stats) {
-		String dateText = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(stats.getDate());
+		String dateText = DateFormat.getDateInstance().format(stats.getDate());
 		String initialTimeText = stats.getInitialTime()/1000 + "s";
 		String lapDistanceText = stats.getLapDistance() + "m";
 		String timeDecrementText = stats.getTimeDecrement()/1000 + "s";
