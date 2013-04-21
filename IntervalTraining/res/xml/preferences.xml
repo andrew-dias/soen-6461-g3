@@ -4,26 +4,32 @@
 
     <EditTextPreference
         android:defaultValue="10"
-		android:numeric="integer"
         android:key="pref_key_interval_time"
-        android:title="Initial interval time (in seconds)"/>
+        android:numeric="integer"
+        android:title="Initial interval time (in seconds)" />
     <EditTextPreference
         android:defaultValue="15"
-		android:numeric="integer"
         android:key="key_pref_interval_distance"
+        android:numeric="integer"
         android:title="Interval distance (in meters)" />
     <EditTextPreference
         android:defaultValue="10"
-		android:numeric="integer"
         android:key="key_pref_time_decrement"
+        android:numeric="integer"
         android:title="Time decrement (in %)" />
 
     <RingtonePreference
-        android:defaultValue="DEFAULT_NOTIFICATION_URI"
         android:key="key_pref_interval_beep"
-        android:ringtoneType="alarm"
+        android:ringtoneType="notification"
         android:showDefault="true"
         android:showSilent="true"
-        android:title="Interval timer alert" />
+        android:title="Interval timer sound" />
+
+    <Preference
+        android:key="key_pref_song_picker"
+        android:title="Pick a song" >
+		<intent android:action=".SongPickerActivity" />
+    />    
+    </Preference>
 
 </PreferenceScreen>
