@@ -12,10 +12,4 @@
         android:showAsAction="ifRoom"
         android:title="@string/title_activity_view_log">
     </item>
-    <item
-        android:id="@+id/setting_menu_item"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/title_activity_setting">
-    </item>
-    
 </menu>
