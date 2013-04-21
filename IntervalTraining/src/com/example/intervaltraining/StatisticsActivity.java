@@ -14,7 +14,7 @@ public class StatisticsActivity extends Activity {
 
 	// screen objects
 	private TextView dateTextView;
-	private TextView intervalTimeTextView;	
+	private TextView intervalTimeTextView;
 	private TextView lapDistanceTextView;
 	private TextView timeDecrementTextView;
 	private TextView lapsCompletedTextView;
@@ -23,9 +23,9 @@ public class StatisticsActivity extends Activity {
 	private TextView initialSpeedTextView;
 	private TextView topSpeedTextView;
 	private TextView avgSpeedTextView;
-	
+
 	private IntervalStatistics stats;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,45 +33,53 @@ public class StatisticsActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		Bundle b = getIntent().getExtras();
-		stats = b.getParcelable("com.example.intervaltraining.IntervalStatistics");
+		stats = b
+				.getParcelable("com.example.intervaltraining.IntervalStatistics");
 
 		// set screen objects
 		dateTextView = (TextView) this.findViewById(R.id.dateTextView);
-		intervalTimeTextView = (TextView) this.findViewById(R.id.intervalTimeTextView);
-		lapDistanceTextView = (TextView) this.findViewById(R.id.lapDistanceTextView);
-		timeDecrementTextView = (TextView) this.findViewById(R.id.timeDecrementTextView);
-		lapsCompletedTextView = (TextView) this.findViewById(R.id.lapsCompletedTextView);
-		totalDistanceTextView = (TextView) this.findViewById(R.id.totalDistanceTextView);
-		totalTimeTextView = (TextView) this.findViewById(R.id.totalTimeTextView);
-		initialSpeedTextView = (TextView) this.findViewById(R.id.initialSpeedTextView);
+		intervalTimeTextView = (TextView) this
+				.findViewById(R.id.intervalTimeTextView);
+		lapDistanceTextView = (TextView) this
+				.findViewById(R.id.lapDistanceTextView);
+		timeDecrementTextView = (TextView) this
+				.findViewById(R.id.timeDecrementTextView);
+		lapsCompletedTextView = (TextView) this
+				.findViewById(R.id.lapsCompletedTextView);
+		totalDistanceTextView = (TextView) this
+				.findViewById(R.id.totalDistanceTextView);
+		totalTimeTextView = (TextView) this
+				.findViewById(R.id.totalTimeTextView);
+		initialSpeedTextView = (TextView) this
+				.findViewById(R.id.initialSpeedTextView);
 		topSpeedTextView = (TextView) this.findViewById(R.id.topSpeedTextView);
-		avgSpeedTextView = (TextView) this.findViewById(R.id.avgSpeedTextView);		
-		
+		avgSpeedTextView = (TextView) this.findViewById(R.id.avgSpeedTextView);
+
 		setDisplayValues(stats);
 	}
 
 	private void setDisplayValues(IntervalStatistics stats) {
 		String dateText = DateFormat.getDateInstance().format(stats.getDate());
-		String initialTimeText = stats.getInitialTime()/1000 + "s";
+		String initialTimeText = stats.getInitialTime() / 1000 + "s";
 		String lapDistanceText = stats.getLapDistance() + "m";
-		String timeDecrementText = stats.getTimeDecrement()/1000 + "s";
+		String timeDecrementText = stats.getTimeDecrement() / 1000 + "s";
 		String lapsCompletedText = stats.getLapsCompleted() + "";
 		String totalDistanceText = stats.getTotalDistance() + "m";
-		String totalTimeText = stats.getTotalTime()/1000 + "s";
+		String totalTimeText = stats.getTotalTime() / 1000 + "s";
 		String initialSpeedText = stats.getInitialSpeed() + " km/h";
 		String topSpeedText = stats.getTopSpeed() + " km/h";
 		String avgSpeedText = stats.getAvgSpeed() + " km/h";
-	
+
 		dateTextView.setText(dateText);
-		intervalTimeTextView.setText(initialTimeText);		
+		intervalTimeTextView.setText(initialTimeText);
 		lapDistanceTextView.setText(lapDistanceText);
 		timeDecrementTextView.setText(timeDecrementText);
 		lapsCompletedTextView.setText(lapsCompletedText);
-		totalDistanceTextView.setText(totalDistanceText);		
+		totalDistanceTextView.setText(totalDistanceText);
 		totalTimeTextView.setText(totalTimeText);
 		initialSpeedTextView.setText(initialSpeedText);
 		topSpeedTextView.setText(topSpeedText);
-		avgSpeedTextView.setText(avgSpeedText);		
+		avgSpeedTextView.setText(avgSpeedText);
 	}
 
 	@Override
@@ -106,7 +114,7 @@ public class StatisticsActivity extends Activity {
 	}
 
 	public void saveStatistics(View view) {
-		// TODO: save statistics 
+		// TODO: save statistics
 		Toast.makeText(this, "Statistics saved", Toast.LENGTH_SHORT).show();
 	}
 }

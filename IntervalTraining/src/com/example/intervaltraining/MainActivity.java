@@ -24,7 +24,7 @@ public class MainActivity extends Activity {
 	private int intervalTime;
 	private int timeDecrement;
 	private String intervalBeep;
-	
+
 	// statistics
 	private Date currentDate;
 	private int lapCounter = 0;
@@ -34,19 +34,19 @@ public class MainActivity extends Activity {
 	private TextView lapTextView;
 
 	private CountDownTimer intervalTimer;
-	
+
 	// format milliseconds into display string
 	private String getTimeString(long time) {
 		String str = String.format("%1$TS:%1$TL", time);
-		str = str.substring(0, str.length()-2);
-		return str;		
+		str = str.substring(0, str.length() - 2);
+		return str;
 	}
 
 	// get app settings
 	private void setAppSettings() {
 		// load default settings from XML if user has not set them yet
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-		
+
 		// get stored settings
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(this);
@@ -60,24 +60,25 @@ public class MainActivity extends Activity {
 	}
 
 	// TODO: This doesn't work
-	private void playBeep(){
+	private void playBeep() {
 		Uri beepUri = Uri.parse(intervalBeep);
-		Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), beepUri);
-		r.play();			
-    }
+		Ringtone r = RingtoneManager.getRingtone(getApplicationContext(),
+				beepUri);
+		r.play();
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 	}
-	
+
 	// cancel the timer if the user leaves the screen
 	protected void onPause() {
 		super.onPause();
 		intervalTimer.cancel();
 	}
-	
+
 	// set the interface elements
 	protected void onResume() {
 		super.onResume();
@@ -91,7 +92,7 @@ public class MainActivity extends Activity {
 
 		// display starting interval time
 		timerTextView.setText(getTimeString(intervalTime));
-		
+
 		// the interval timer
 		intervalTimer = new CountDownTimer(intervalTime, 100) {
 
@@ -100,15 +101,15 @@ public class MainActivity extends Activity {
 				timerTextView.setText(getTimeString(millisUntilFinished));
 			}
 
-			// TODO: Decrement the time every other lap 
+			// TODO: Decrement the time every other lap
 			public void onFinish() {
 				playBeep();
-				lapTextView.setText("Lap: " + ++lapCounter);
+				lapTextView.setText("Laps: " + ++lapCounter);
 				this.start();
 			}
-		};		
+		};
 	}
-		
+
 	public void onStartToggleButtonClicked(View view) {
 		// Is the toggle on?
 		boolean on = ((ToggleButton) view).isChecked();
@@ -121,12 +122,16 @@ public class MainActivity extends Activity {
 			intervalTimer.cancel();
 			if (lapCounter > 0) {
 				// generate statistics
-				IntervalStatistics stats = new IntervalStatistics(currentDate, intervalTime, intervalDistance, timeDecrement, lapCounter);
+				IntervalStatistics stats = new IntervalStatistics(currentDate,
+						intervalTime, intervalDistance, timeDecrement,
+						lapCounter);
 				// send user to statistics screen
 				Intent intent = new Intent(this, StatisticsActivity.class);
-				intent.putExtra("com.example.intervaltraining.IntervalStatistics", stats);
+				intent.putExtra(
+						"com.example.intervaltraining.IntervalStatistics",
+						stats);
 				startActivity(intent);
-				
+
 				// TODO: change button text to 'Reset'.
 			}
 		}

@@ -1,15 +1,7 @@
 package com.example.intervaltraining;
 
 import android.app.Activity;
-import android.content.ContentResolver;
-import android.database.Cursor;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
 
 // TODO: Implement SongPickerActivity
 public class SongPickerActivity extends Activity {

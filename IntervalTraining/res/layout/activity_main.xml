@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="Lap 0"
+        android:text="Laps: 0"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="50sp" />
 
