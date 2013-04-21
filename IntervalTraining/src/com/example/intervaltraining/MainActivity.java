@@ -70,6 +70,17 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+	}
+	
+	// cancel the timer if the user leaves the screen
+	protected void onPause() {
+		super.onPause();
+		intervalTimer.cancel();
+	}
+	
+	// set the interface elements
+	protected void onResume() {
+		super.onResume();
 
 		// load the application settings
 		setAppSettings();
@@ -95,9 +106,9 @@ public class MainActivity extends Activity {
 				lapTextView.setText("Lap: " + ++lapCounter);
 				this.start();
 			}
-		};
+		};		
 	}
-	
+		
 	public void onStartToggleButtonClicked(View view) {
 		// Is the toggle on?
 		boolean on = ((ToggleButton) view).isChecked();
@@ -155,5 +166,4 @@ public class MainActivity extends Activity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-
 }
