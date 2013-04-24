@@ -6,7 +6,6 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.content.Intent;
@@ -20,9 +19,11 @@ import android.widget.ToggleButton;
 public class MainActivity extends Activity {
 
 	// application settings
-	private int intervalDistance;
-	private int intervalTime;
-	private int timeDecrement;
+	private long intervalDistance;
+	private long initialIntervalTime;
+	private long currentIntervalTime;
+	private long nextIntervalTime;
+	private long timeDecrement;
 	private String intervalBeep;
 
 	// statistics
@@ -32,8 +33,9 @@ public class MainActivity extends Activity {
 	// screen objects
 	private TextView timerTextView;
 	private TextView lapTextView;
+	private TextView nextLapTimeTextView;
 
-	private CountDownTimer intervalTimer;
+	private IntervalTimer intervalTimer;
 
 	// format milliseconds into display string
 	private String getTimeString(long time) {
@@ -50,7 +52,7 @@ public class MainActivity extends Activity {
 		// get stored settings
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		intervalTime = Integer.parseInt(sharedPref.getString(
+		initialIntervalTime = Integer.parseInt(sharedPref.getString(
 				"pref_key_interval_time", "0")) * 1000;
 		intervalDistance = Integer.parseInt(sharedPref.getString(
 				"pref_key_interval_distance", "0"));
@@ -89,12 +91,16 @@ public class MainActivity extends Activity {
 		// set screen objects
 		timerTextView = (TextView) this.findViewById(R.id.timerTextView);
 		lapTextView = (TextView) this.findViewById(R.id.lapTextView);
+		nextLapTimeTextView = (TextView) this.findViewById(R.id.nextLapTimeTextView);
 
+		currentIntervalTime = initialIntervalTime;
+	
 		// display starting interval time
-		timerTextView.setText(getTimeString(intervalTime));
-
+		timerTextView.setText(getTimeString(currentIntervalTime));
+		nextLapTimeTextView.setText("Next lap: " + getTimeString(getDecrementedTime(currentIntervalTime)));
+		
 		// the interval timer
-		intervalTimer = new CountDownTimer(intervalTime, 100) {
+		intervalTimer = new IntervalTimer(currentIntervalTime, 100) {
 
 			// update the timer display
 			public void onTick(long millisUntilFinished) {
@@ -105,11 +111,37 @@ public class MainActivity extends Activity {
 			public void onFinish() {
 				playBeep();
 				lapTextView.setText("Laps: " + ++lapCounter);
-				this.start();
+
+				currentIntervalTime = getDecrementedTime(currentIntervalTime);
+				nextIntervalTime = getDecrementedTime(currentIntervalTime);
+ 
+				if (nextIntervalTime >= 1000) {
+					nextLapTimeTextView.setText("Next lap: " + getTimeString(nextIntervalTime));							
+				}				
+				else {
+					nextLapTimeTextView.setText("Next Lap: --:--");					
+				}
+				
+				// only run another lap if there's at least one second left
+				if (currentIntervalTime >= 1000) {
+					this.updateTimer(currentIntervalTime);
+					this.start();
+				}
+				else {
+					if (lapCounter > 0) {
+						// generate statistics
+						doStats();
+					}
+				}
+					
 			}
 		};
 	}
-
+	
+	public long getDecrementedTime(long startTime) {
+		return (long) (startTime * (100-timeDecrement)/100.0);
+	}
+	
 	public void onStartToggleButtonClicked(View view) {
 		// Is the toggle on?
 		boolean on = ((ToggleButton) view).isChecked();
@@ -122,21 +154,22 @@ public class MainActivity extends Activity {
 			intervalTimer.cancel();
 			if (lapCounter > 0) {
 				// generate statistics
-				IntervalStatistics stats = new IntervalStatistics(currentDate,
-						intervalTime, intervalDistance, timeDecrement,
-						lapCounter);
-				// send user to statistics screen
-				Intent intent = new Intent(this, StatisticsActivity.class);
-				intent.putExtra(
-						"com.example.intervaltraining.IntervalStatistics",
-						stats);
-				startActivity(intent);
-
-				// TODO: change button text to 'Reset'.
+				doStats();
 			}
 		}
 	}
 
+	private void doStats() {
+		IntervalStatistics stats = new IntervalStatistics(currentDate,
+				initialIntervalTime, intervalDistance, timeDecrement,
+				lapCounter);
+		// send user to statistics screen
+		Intent intent = new Intent(this, StatisticsActivity.class);
+		intent.putExtra(
+				"com.example.intervaltraining.IntervalStatistics",
+				stats);
+		startActivity(intent);		
+	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

@@ -80,7 +80,7 @@ public class IntervalStatistics implements Parcelable {
 		long time = initialTime;
 
 		for (int i = 1; i < lapsCompleted / 2; i++) {
-			time = time * ((100 - timeDecrement) / 100);
+			time = (long) (time * ((100 - timeDecrement) / 100.0));
 		}
 
 		return time;
@@ -92,7 +92,7 @@ public class IntervalStatistics implements Parcelable {
 
 		for (int i = 1; i <= lapsCompleted; i++) {
 			if ((i != 1) && (i % 2 == 1)) {
-				lapTime = lapTime * ((100 - timeDecrement) / 100);
+				lapTime = (long) (lapTime * ((100 - timeDecrement) / 100.0));
 			}
 			timeTotal += lapTime;
 		}

@@ -62,7 +62,7 @@ public class StatisticsActivity extends Activity {
 		String dateText = DateFormat.getDateInstance().format(stats.getDate());
 		String initialTimeText = stats.getInitialTime() / 1000 + "s";
 		String lapDistanceText = stats.getLapDistance() + "m";
-		String timeDecrementText = stats.getTimeDecrement() / 1000 + "s";
+		String timeDecrementText = stats.getTimeDecrement() + "%";
 		String lapsCompletedText = stats.getLapsCompleted() + "";
 		String totalDistanceText = stats.getTotalDistance() + "m";
 		String totalTimeText = stats.getTotalTime() / 1000 + "s";
