@@ -3,6 +3,7 @@ package com.example.intervaltraining;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 
 import android.app.Activity;
@@ -25,12 +26,13 @@ public class StatisticsActivity extends Activity implements OnClickListener {
 	private TextView lapDistanceTextView;
 	private TextView timeDecrementTextView;
 	private TextView lapsCompletedTextView;
+	private TextView lastLapTimeTextView;
 	private TextView totalDistanceTextView;
 	private TextView totalTimeTextView;
 	private TextView initialSpeedTextView;
 	private TextView topSpeedTextView;
 	private TextView avgSpeedTextView;
-    //private Button button;
+	// private Button button;
 	private IntervalStatistics stats;
 
 	@Override
@@ -38,8 +40,8 @@ public class StatisticsActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_statistics);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		//button =(Button) this.findViewById(R.id.button1);
-	    //button.setOnClickListener(this);
+		// button =(Button) this.findViewById(R.id.button1);
+		// button.setOnClickListener(this);
 		Bundle b = getIntent().getExtras();
 		stats = b
 				.getParcelable("com.example.intervaltraining.IntervalStatistics");
@@ -54,6 +56,8 @@ public class StatisticsActivity extends Activity implements OnClickListener {
 				.findViewById(R.id.timeDecrementTextView);
 		lapsCompletedTextView = (TextView) this
 				.findViewById(R.id.lapsCompletedTextView);
+		lastLapTimeTextView = (TextView) this
+				.findViewById(R.id.lastLapTimeTextView);
 		totalDistanceTextView = (TextView) this
 				.findViewById(R.id.totalDistanceTextView);
 		totalTimeTextView = (TextView) this
@@ -65,6 +69,10 @@ public class StatisticsActivity extends Activity implements OnClickListener {
 
 		setDisplayValues(stats);
 	}
+	
+	private String doubleFormat (double num) {
+		return new DecimalFormat("#.##").format(num);
+	}
 
 	private void setDisplayValues(IntervalStatistics stats) {
 		String dateText = DateFormat.getDateInstance().format(stats.getDate());
@@ -72,17 +80,19 @@ public class StatisticsActivity extends Activity implements OnClickListener {
 		String lapDistanceText = stats.getLapDistance() + "m";
 		String timeDecrementText = stats.getTimeDecrement() + "%";
 		String lapsCompletedText = stats.getLapsCompleted() + "";
+		String lastLapTimeText = stats.getLastLapTime() / 1000 + "s";
 		String totalDistanceText = stats.getTotalDistance() + "m";
 		String totalTimeText = stats.getTotalTime() / 1000 + "s";
-		String initialSpeedText = stats.getInitialSpeed() + " km/h";
-		String topSpeedText = stats.getTopSpeed() + " km/h";
-		String avgSpeedText = stats.getAvgSpeed() + " km/h";
+		String initialSpeedText = doubleFormat(stats.getInitialSpeed()) + " km/h";
+		String topSpeedText = doubleFormat(stats.getTopSpeed()) + " km/h";
+		String avgSpeedText = doubleFormat(stats.getAvgSpeed()) + " km/h";
 
 		dateTextView.setText(dateText);
 		intervalTimeTextView.setText(initialTimeText);
 		lapDistanceTextView.setText(lapDistanceText);
 		timeDecrementTextView.setText(timeDecrementText);
 		lapsCompletedTextView.setText(lapsCompletedText);
+		lastLapTimeTextView.setText(lastLapTimeText);
 		totalDistanceTextView.setText(totalDistanceText);
 		totalTimeTextView.setText(totalTimeText);
 		initialSpeedTextView.setText(initialSpeedText);
@@ -125,46 +135,45 @@ public class StatisticsActivity extends Activity implements OnClickListener {
 		// TODO: save statistics
 		Toast.makeText(this, "Statistics saved", Toast.LENGTH_SHORT).show();
 		// TODO Auto-generated method stub
-	    String string = "hello";
-		String localTime =null;
-			try{
-				
-				localTime = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
-				FileOutputStream fos = openFileOutput(localTime, Context.MODE_PRIVATE);
-		        fos.write(string.getBytes());
-		        fos.close();
-		        ViewLogActivity.additem(localTime);		
-		
-			} catch (IOException e) {
+		String string = "hello";
+		String localTime = null;
+		try {
+
+			localTime = java.text.DateFormat.getDateTimeInstance().format(
+					Calendar.getInstance().getTime());
+			FileOutputStream fos = openFileOutput(localTime,
+					Context.MODE_PRIVATE);
+			fos.write(string.getBytes());
+			fos.close();
+			ViewLogActivity.additem(localTime);
+
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
-	
+
 	}
 
 	@Override
 	public void onClick(View arg0) {
-		/*// TODO Auto-generated method stub
-		String string = "hello";
-		String localTime =null;
-		
-		if (arg0.getId()==R.id.button1){
-			try{
-				
-				localTime = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
-				FileOutputStream fos = openFileOutput(localTime, Context.MODE_PRIVATE);
-		        fos.write(string.getBytes());
-		        fos.close();
-		        ViewLogActivity.additem(localTime);		
-		
-			} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-			
-			
-		}
-		*/
+		/*
+		 * // TODO Auto-generated method stub String string = "hello"; String
+		 * localTime =null;
+		 * 
+		 * if (arg0.getId()==R.id.button1){ try{
+		 * 
+		 * localTime =
+		 * java.text.DateFormat.getDateTimeInstance().format(Calendar
+		 * .getInstance().getTime()); FileOutputStream fos =
+		 * openFileOutput(localTime, Context.MODE_PRIVATE);
+		 * fos.write(string.getBytes()); fos.close();
+		 * ViewLogActivity.additem(localTime);
+		 * 
+		 * } catch (IOException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); }
+		 * 
+		 * 
+		 * }
+		 */
 	}
 }

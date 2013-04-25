@@ -15,7 +15,8 @@ public class IntervalStatistics implements Parcelable {
 
 	// calculated
 	private long totalDistance;
-	private long totalTime;
+	private double totalTime;
+	private double lastLapTime;
 	private double topSpeed;
 	private double initialSpeed;
 	private double avgSpeed;
@@ -55,8 +56,12 @@ public class IntervalStatistics implements Parcelable {
 		return totalDistance;
 	}
 
-	public long getTotalTime() {
+	public double getTotalTime() {
 		return totalTime;
+	}
+
+	public double getLastLapTime() {
+		return lastLapTime;
 	}
 
 	public double getTopSpeed() {
@@ -72,27 +77,27 @@ public class IntervalStatistics implements Parcelable {
 	}
 
 	// convert m/ms -> km/h
-	private double convert(long distance, long time) {
+	private double convert(double distance, double time) {
 		return distance / time * 1000 * 3.6;
 	}
 
-	private long getLastLapTime() {
-		long time = initialTime;
+	private double calculateLastLapTime() {
+		double time = initialTime;
 
-		for (int i = 1; i < lapsCompleted / 2; i++) {
-			time = (long) (time * ((100 - timeDecrement) / 100.0));
+		for (int i = 1; i < lapsCompleted / 2.0; i++) {
+			time = time * ((100 - timeDecrement) / 100.0);
 		}
 
 		return time;
 	}
 
-	private long calculateTotalTime() {
-		long timeTotal = initialTime;
-		long lapTime = initialTime;
+	private double calculateTotalTime() {
+		double timeTotal = 0;
+		double lapTime = initialTime;
 
 		for (int i = 1; i <= lapsCompleted; i++) {
 			if ((i != 1) && (i % 2 == 1)) {
-				lapTime = (long) (lapTime * ((100 - timeDecrement) / 100.0));
+				lapTime = lapTime * ((100 - timeDecrement) / 100.0);
 			}
 			timeTotal += lapTime;
 		}
@@ -102,7 +107,8 @@ public class IntervalStatistics implements Parcelable {
 	private void calculateStats() {
 		totalDistance = lapsCompleted * lapDistance;
 		totalTime = calculateTotalTime();
-		topSpeed = convert(lapDistance, getLastLapTime());
+		lastLapTime = calculateLastLapTime();
+		topSpeed = convert(lapDistance, lastLapTime);
 		initialSpeed = convert(lapDistance, initialTime);
 		avgSpeed = convert(totalDistance, totalTime);
 	}
@@ -131,7 +137,8 @@ public class IntervalStatistics implements Parcelable {
 		dest.writeLong(timeDecrement);
 		dest.writeLong(lapsCompleted);
 		dest.writeLong(totalDistance);
-		dest.writeLong(totalTime);
+		dest.writeDouble(totalTime);
+		dest.writeDouble(lastLapTime);
 		dest.writeDouble(topSpeed);
 		dest.writeDouble(initialSpeed);
 		dest.writeDouble(avgSpeed);
@@ -144,7 +151,8 @@ public class IntervalStatistics implements Parcelable {
 		timeDecrement = in.readLong();
 		lapsCompleted = in.readLong();
 		totalDistance = in.readLong();
-		totalTime = in.readLong();
+		totalTime = in.readDouble();
+		lastLapTime = in.readDouble();
 		topSpeed = in.readDouble();
 		initialSpeed = in.readDouble();
 		avgSpeed = in.readDouble();

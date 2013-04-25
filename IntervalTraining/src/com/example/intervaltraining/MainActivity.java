@@ -26,6 +26,9 @@ public class MainActivity extends Activity {
 	private long timeDecrement;
 	private String intervalBeep;
 
+	// control variable
+	private boolean decrementTime = false;
+
 	// statistics
 	private Date currentDate;
 	private int lapCounter = 0;
@@ -91,14 +94,17 @@ public class MainActivity extends Activity {
 		// set screen objects
 		timerTextView = (TextView) this.findViewById(R.id.timerTextView);
 		lapTextView = (TextView) this.findViewById(R.id.lapTextView);
-		nextLapTimeTextView = (TextView) this.findViewById(R.id.nextLapTimeTextView);
+		nextLapTimeTextView = (TextView) this
+				.findViewById(R.id.nextLapTimeTextView);
 
 		currentIntervalTime = initialIntervalTime;
-	
-		// display starting interval time
+
+		// display starting values
 		timerTextView.setText(getTimeString(currentIntervalTime));
-		nextLapTimeTextView.setText("Next lap: " + getTimeString(getDecrementedTime(currentIntervalTime)));
-		
+		lapTextView.setText("Laps: 0");
+		nextLapTimeTextView.setText("Next lap: "
+				+ getTimeString(currentIntervalTime));
+
 		// the interval timer
 		intervalTimer = new IntervalTimer(currentIntervalTime, 100) {
 
@@ -112,36 +118,39 @@ public class MainActivity extends Activity {
 				playBeep();
 				lapTextView.setText("Laps: " + ++lapCounter);
 
-				currentIntervalTime = getDecrementedTime(currentIntervalTime);
-				nextIntervalTime = getDecrementedTime(currentIntervalTime);
- 
-				if (nextIntervalTime >= 1000) {
-					nextLapTimeTextView.setText("Next lap: " + getTimeString(nextIntervalTime));							
-				}				
-				else {
-					nextLapTimeTextView.setText("Next Lap: --:--");					
+				if (decrementTime) {
+					currentIntervalTime = getDecrementedTime(currentIntervalTime);
+					decrementTime = false;
+				} else {
+					nextIntervalTime = getDecrementedTime(currentIntervalTime);
+
+					if (nextIntervalTime >= 1000) {
+						nextLapTimeTextView.setText("Next lap: "
+								+ getTimeString(nextIntervalTime));
+					} else {
+						nextLapTimeTextView.setText("Next Lap: --:--");
+					}
+					decrementTime = true;
 				}
-				
+
 				// only run another lap if there's at least one second left
 				if (currentIntervalTime >= 1000) {
 					this.updateTimer(currentIntervalTime);
 					this.start();
-				}
-				else {
+				} else {
 					if (lapCounter > 0) {
 						// generate statistics
 						doStats();
 					}
 				}
-					
 			}
 		};
 	}
-	
+
 	public long getDecrementedTime(long startTime) {
-		return (long) (startTime * (100-timeDecrement)/100.0);
+		return (long) (startTime * (100 - timeDecrement) / 100.0);
 	}
-	
+
 	public void onStartToggleButtonClicked(View view) {
 		// Is the toggle on?
 		boolean on = ((ToggleButton) view).isChecked();
@@ -165,11 +174,11 @@ public class MainActivity extends Activity {
 				lapCounter);
 		// send user to statistics screen
 		Intent intent = new Intent(this, StatisticsActivity.class);
-		intent.putExtra(
-				"com.example.intervaltraining.IntervalStatistics",
+		intent.putExtra("com.example.intervaltraining.IntervalStatistics",
 				stats);
-		startActivity(intent);		
+		startActivity(intent);
 	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
