@@ -1,16 +1,23 @@
 package com.example.intervaltraining;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
+import java.util.Calendar;
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class StatisticsActivity extends Activity {
+public class StatisticsActivity extends Activity implements OnClickListener {
 
 	// screen objects
 	private TextView dateTextView;
@@ -23,7 +30,7 @@ public class StatisticsActivity extends Activity {
 	private TextView initialSpeedTextView;
 	private TextView topSpeedTextView;
 	private TextView avgSpeedTextView;
-
+    //private Button button;
 	private IntervalStatistics stats;
 
 	@Override
@@ -31,7 +38,8 @@ public class StatisticsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_statistics);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
+		//button =(Button) this.findViewById(R.id.button1);
+	    //button.setOnClickListener(this);
 		Bundle b = getIntent().getExtras();
 		stats = b
 				.getParcelable("com.example.intervaltraining.IntervalStatistics");
@@ -116,5 +124,47 @@ public class StatisticsActivity extends Activity {
 	public void saveStatistics(View view) {
 		// TODO: save statistics
 		Toast.makeText(this, "Statistics saved", Toast.LENGTH_SHORT).show();
+		// TODO Auto-generated method stub
+	    String string = "hello";
+		String localTime =null;
+			try{
+				
+				localTime = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+				FileOutputStream fos = openFileOutput(localTime, Context.MODE_PRIVATE);
+		        fos.write(string.getBytes());
+		        fos.close();
+		        ViewLogActivity.additem(localTime);		
+		
+			} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+	
+	}
+
+	@Override
+	public void onClick(View arg0) {
+		/*// TODO Auto-generated method stub
+		String string = "hello";
+		String localTime =null;
+		
+		if (arg0.getId()==R.id.button1){
+			try{
+				
+				localTime = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+				FileOutputStream fos = openFileOutput(localTime, Context.MODE_PRIVATE);
+		        fos.write(string.getBytes());
+		        fos.close();
+		        ViewLogActivity.additem(localTime);		
+		
+			} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+			
+		}
+		*/
 	}
 }

@@ -1,28 +1,92 @@
 package com.example.intervaltraining;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
-public class ViewLogActivity extends Activity implements
-		android.view.View.OnClickListener {
-	Button ok;
-	Spinner sp;
-
+public class ViewLogActivity extends ListActivity implements OnClickListener {
+	
+	static ArrayList<String> listItems=new ArrayList<String>();
+	static ArrayAdapter<String> adapter = null;
+	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	
+	protected void onCreate(Bundle icicle) {
+		super.onCreate(icicle);
 		setContentView(R.layout.activity_view_log);
-		ok = (Button) this.findViewById(R.id.OK);
-		sp = (Spinner) findViewById(R.id.spinner);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-	}
+	
+		
+		final ListView list = getListView();
+        adapter=new ArrayAdapter<String>(this,
+        android.R.layout.simple_list_item_1,
+            listItems);
+		//getActionBar().setDisplayHomeAsUpEnabled(true);
+		setListAdapter(adapter);
+        
+		
+		
+		list.setOnItemClickListener(new OnItemClickListener(){
 
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				Object o = list.getItemAtPosition(arg2);
+			    String filename = (String)o;
+	        	String line=null;
+		        String res= null;
+		        try {
+		        	
+		        	InputStream in = openFileInput(filename);
+	                               
+		            if (in != null) {
+		            	int i =0;
+		            	InputStreamReader input = new InputStreamReader(in);
+	                    BufferedReader br = new BufferedReader(input);
+		            	while (( line = br.readLine()) != null) {
+		            		res = line;
+		                    
+		                    }
+		                        in.close();
+		                        Toast.makeText(getApplicationContext(),"File Data == " + res,Toast.LENGTH_LONG).show();
+		                  }
+		            } catch(Exception e){
+		                 Toast.makeText(getApplicationContext(),e.toString() +   e.getMessage(),Toast.LENGTH_LONG).show();
+		            }
+		                       
+			}
+
+        	
+        	
+        });
+        
+     
+    }
+	
+	public static void additem(String name){
+    	listItems.add(name);
+        adapter.notifyDataSetChanged();
+    }
+
+	
+
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
