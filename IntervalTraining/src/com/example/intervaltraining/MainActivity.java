@@ -53,9 +53,9 @@ public class MainActivity extends Activity {
 		SharedPreferences sharedPref = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		initialIntervalTime = Integer.parseInt(sharedPref.getString(
-				"pref_key_interval_time", "0")) * 1000;
+				"key_pref_interval_time", "0")) * 1000;
 		intervalDistance = Integer.parseInt(sharedPref.getString(
-				"pref_key_interval_distance", "0"));
+				"key_pref_interval_distance", "0"));
 		timeDecrement = Integer.parseInt(sharedPref.getString(
 				"key_pref_time_decrement", "0"));
 		intervalBeep = sharedPref.getString("key_pref_interval_beep", "");

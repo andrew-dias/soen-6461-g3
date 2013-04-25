@@ -4,7 +4,7 @@
 
     <EditTextPreference
         android:defaultValue="10"
-        android:key="pref_key_interval_time"
+        android:key="key_pref_interval_time"
         android:numeric="integer"
         android:title="Initial interval time (in seconds)" />
     <EditTextPreference

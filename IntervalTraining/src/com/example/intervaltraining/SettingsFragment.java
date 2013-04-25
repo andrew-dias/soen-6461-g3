@@ -22,7 +22,7 @@ public class SettingsFragment extends PreferenceFragment implements
 	private void setSummaries() {
 		SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
 
-		setSummary(prefs, "pref_key_interval_time");
+		setSummary(prefs, "key_pref_interval_time");
 		setSummary(prefs, "key_pref_interval_distance");
 		setSummary(prefs, "key_pref_time_decrement");
 		setSummary(prefs, "key_pref_interval_beep");
@@ -35,7 +35,7 @@ public class SettingsFragment extends PreferenceFragment implements
 
 		Preference connectionPref = findPreference(key);
 
-		if (key.equals("pref_key_interval_time")) {
+		if (key.equals("key_pref_interval_time")) {
 			summaryText = prefValue + " seconds";
 		} else if (key.equals("key_pref_interval_distance")) {
 			summaryText = prefValue + " meters";
