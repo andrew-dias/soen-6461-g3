@@ -16,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -23,26 +24,28 @@ import android.widget.Toast;
 
 public class ViewLogActivity extends ListActivity implements OnClickListener {
 	
-	static ArrayList<String> listItems=new ArrayList<String>();
-	static ArrayAdapter<String> adapter = null;
+	 static ArrayList<String> listItems =new ArrayList<String>(); ;
+	 static ArrayAdapter<String> adapter;
+    
 	
 	@Override
 	
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		setContentView(R.layout.activity_view_log);
-	
 		
+		
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			String str = null;
+		    String value = extras.getString(str);
+		    additem(value);
+		}
 		final ListView list = getListView();
-        adapter=new ArrayAdapter<String>(this,
-        android.R.layout.simple_list_item_1,
-            listItems);
-		//getActionBar().setDisplayHomeAsUpEnabled(true);
+	
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		setListAdapter(adapter);
-        
-		
-		
-		list.setOnItemClickListener(new OnItemClickListener(){
+        list.setOnItemClickListener(new OnItemClickListener(){
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
@@ -51,6 +54,7 @@ public class ViewLogActivity extends ListActivity implements OnClickListener {
 			    String filename = (String)o;
 	        	String line=null;
 		        String res= null;
+		        
 		        try {
 		        	
 		        	InputStream in = openFileInput(filename);
@@ -64,25 +68,39 @@ public class ViewLogActivity extends ListActivity implements OnClickListener {
 		                    
 		                    }
 		                        in.close();
-		                        Toast.makeText(getApplicationContext(),"File Data == " + res,Toast.LENGTH_LONG).show();
+		                    openFile(res);    
+		                                 
 		                  }
 		            } catch(Exception e){
 		                 Toast.makeText(getApplicationContext(),e.toString() +   e.getMessage(),Toast.LENGTH_LONG).show();
 		            }
-		                       
+		      	                       
 			}
 
-        	
+			  
         	
         });
         
      
     }
 	
-	public static void additem(String name){
-    	listItems.add(name);
-        adapter.notifyDataSetChanged();
-    }
+	public void openFile(String file){
+		String filename=null;  
+		Intent intent = new Intent (this, ViewLogFile.class) ;
+			intent.putExtra(filename, file);
+			startActivity(intent);
+          
+		
+	}
+	
+	public void additem(String name){
+		adapter=new ArrayAdapter<String>(this,
+			        android.R.layout.simple_list_item_1,
+			            listItems);
+	    listItems.add(name);
+	    adapter.notifyDataSetChanged();
+	      
+	}
 
 	
 

@@ -34,13 +34,19 @@
             android:name="com.example.intervaltraining.StatisticsActivity"
             android:label="@string/title_activity_statistics" >
         </activity>
-	    <activity android:name="com.example.intervaltraining.SongPickerActivity" 
-	              android:label="Song Picker" >
-	        <intent-filter>
-	           <action android:name=".SongPickerActivity" />
-	           <category android:name="android.intent.category.DEFAULT" />
-	       </intent-filter>
-	    </activity>
-	</application>
+        <activity
+            android:name="com.example.intervaltraining.SongPickerActivity"
+            android:label="Song Picker" >
+            <intent-filter>
+                <action android:name=".SongPickerActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.intervaltraining.ViewLogFile"
+            android:label="@string/title_activity_view_log_file" >
+        </activity>
+    </application>
 
 </manifest>
